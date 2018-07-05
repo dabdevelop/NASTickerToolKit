@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "extend": "^3.0.1",
+    "fs": "0.0.1-security",
+    "lodash": "^4.17.10",
+    "nebulas": "^0.5.2"
+  }
+}
