@@ -31,6 +31,8 @@ function CGTPriceDaemon(){
             getOldCGTPrice(function(oldPrice){
                 if(Math.abs(newPrice - oldPrice) > 0.0001){
                     updateTokenPrice(dappAddress, {NAS: newPrice});
+                } else {
+                    console.log("Price not changes: " + newPrice + ' NAS');
                 }
             })
         });
