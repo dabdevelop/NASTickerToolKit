@@ -94,7 +94,7 @@ function callContract(contractAddress, fun, args, value, acc){
                             neb.api.getTransactionReceipt({hash: txhash}).then((receipt) => {
                                 if (receipt.status != 2) //not in pending
                                 {
-                                    console.log(JSON.stringify(receipt));
+                                    //console.log(JSON.stringify(receipt));
                                     clearInterval(trigger);
                                 }
                             });
