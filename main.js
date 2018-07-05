@@ -10,6 +10,7 @@ var Nebulas = require("nebulas"),
 
 var rpcURL = "https://mainnet.nebulas.io";
 var chainId = -1;
+var nonce = -1;
 var cgDappAddress = 'n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt';
 var dappAddress = 'n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr';
 
@@ -22,12 +23,12 @@ var acc = new Account();
 var passphrase = "password";
 acc = acc.fromKey(key, passphrase, true);
 
-setInterval(CGTPriceDaemon, 15000);
+setInterval(CGTPriceDaemon, 60000);
 
 function CGTPriceDaemon(){
     if(chainId > 0){
         getCGTPrice(function(price){
-            updateTokenPrice(dappAddress, {nas: price});
+            updateTokenPrice(dappAddress, {NAS: price});
         });
     } else {
         neb.api.getNebState().then((nebstate) => {
@@ -40,6 +41,7 @@ function updateTokenPrice(address, price){
     //updateTokenPrice
     var fun = 'updateTokenPrice';
     var args = [];
+    args.push(cgDappAddress);
     args.push(price);
     callContract(address, fun, args, 0, acc);
 }
@@ -50,7 +52,11 @@ function callContract(contractAddress, fun, args, value, acc){
         neb.api.getAccountState(address).then((accstate) => {
             if(Unit.fromBasic(accstate.balance, "nas").toNumber() > value){
                 let _value = Unit.toBasic(value);
-                let _nonce = parseInt(accstate.nonce) + 1;
+                if(nonce < 0){
+                    nonce = parseInt(accstate.nonce);
+                }
+                nonce ++;
+                let _nonce = nonce;
                 let _to = contractAddress;
                 let _gasPrice = 1000000;
                 let _gasLimit = 2000000;
