@@ -27,8 +27,12 @@ setInterval(CGTPriceDaemon, 60000);
 
 function CGTPriceDaemon(){
     if(chainId > 0){
-        getCGTPrice(function(price){
-            updateTokenPrice(dappAddress, {NAS: price});
+        getNewCGTPrice(function(newPrice){
+            getOldCGTPrice(function(oldPrice){
+                if(Math.abs(newPrice - oldPrice) > 0.0001){
+                    updateTokenPrice(dappAddress, {NAS: newPrice});
+                }
+            })
         });
     } else {
         neb.api.getNebState().then((nebstate) => {
@@ -133,7 +137,7 @@ function innerCall(fun, args, value, callback, address) {
     callback(params);
 }
 
-function getCGTPrice(callback){
+function getNewCGTPrice(callback){
     var fun = 'sellPrice';
     var args = [];
     args.push(0.1);
@@ -155,4 +159,28 @@ function getCGTPrice(callback){
         });
 
     }, cgDappAddress);
+}
+
+function getOldCGTPrice(callback){
+    var fun = 'getTokenByIndex';
+    var args = [];
+    args.push(0);
+    innerCall(fun, args, 0, function(params){
+        neb.api.call(params.from.getAddressString(), params.to, params.value, 0, params.gasPrice, params.gasLimit, params.contract).then(function (resp) {
+            var result = resp.result;
+            if(result === 'null' || result === '""'){
+                return;
+            }
+            try{
+                var token = JSON.parse(result);
+                callback(token.price.NAS);
+            }catch (err){
+                //result is the error message
+                console.log("error:" + err.message)
+            }
+        }).catch(function (err) {
+            console.log("error:" + err.message)
+        });
+
+    }, dappAddress);
 }
