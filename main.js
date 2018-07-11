@@ -19,6 +19,7 @@ var dappAddress = 'n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr';
 
 neb.setRequest(new Nebulas.HttpRequest(rpcURL));
 
+var acc;
 var key;
 var passphrase = "password";
 
@@ -32,6 +33,10 @@ var path = "./accounts/";
          passphrase = accounts[1];
          resolve();
      } catch (e){
+        if (typeof process.env.KEY !== 'undefined' && typeof process.env.PASSWORD !== 'undefined'){
+          resolve();
+          return
+        }
          try {
              mkdirsSync(path);
              generateWallets(1, passphrase, resolve);
@@ -51,8 +56,7 @@ var path = "./accounts/";
          key = JSON.stringify(require(path + accounts[0] + ".json"));
          passphrase = accounts[1]
      }
-
-     var acc = new Account();
+     acc = new Account();
 
      acc = acc.fromKey(key, passphrase, true);
 
