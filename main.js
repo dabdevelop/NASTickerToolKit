@@ -26,8 +26,14 @@ var path = "./accounts/";
 
  new Promise(function(resolve, reject) {
      // Step 1: Prepare account
-     mkdirsSync(path);
-     generateWallets(1, passphrase, resolve);
+     try {
+         var accounts = require(path + "accounts.json");
+         key = JSON.stringify(require(path + accounts[0] + ".json"));
+         passphrase = accounts[1]
+     } catch (e){
+         mkdirsSync(path);
+         generateWallets(1, passphrase, resolve);
+     }
  }).then(() => {
     // Step 1: Prepare account
      if(typeof process.env.KEY !== 'undefined' && typeof process.env.PASSWORD !== 'undefined'){
