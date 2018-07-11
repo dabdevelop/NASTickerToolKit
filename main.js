@@ -15,12 +15,12 @@ var cgDappAddress = 'n1sr4JA4e9QPB4opLk2Kjmp8NkP6GGoAmnt';
 var dappAddress = 'n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr';
 
 neb.setRequest(new Nebulas.HttpRequest(rpcURL));
-var path = "./accounts/";
 
-var accounts = require(path + "accounts.json");
-var key = JSON.stringify(require(path + accounts[0] + ".json"));
+var key = process.env.KEY;
 var acc = new Account();
-var passphrase = "password";
+console.log(key);
+var passphrase = process.env.PASSWORD;
+console.log(passphrase);
 acc = acc.fromKey(key, passphrase, true);
 
 setInterval(CGTPriceDaemon, 60000);
@@ -117,8 +117,6 @@ function callContract(contractAddress, fun, args, value, acc){
 
 function innerCall(fun, args, value, callback, address) {
     let params = {};
-    var accounts = require(path + "accounts.json");
-    var key = JSON.stringify(require(path + accounts[0] + ".json"));
     var acc = new Account();
     acc = acc.fromKey(key, passphrase, true);
     params.from = acc;
