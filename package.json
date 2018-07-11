@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node main.js"
+  },
   "dependencies": {
     "bluebird": "^3.5.1",
     "extend": "^3.0.1",

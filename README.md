@@ -1,6 +1,4 @@
 ## 主要内容 NTT挖矿教程
-[//]: # ()
-
 
 
 ### 1. 获取钱包前期准备
@@ -11,8 +9,7 @@ https://github.com/nebulasio/WebExtensionWallet
 NTT地址和NAS地址一样
 星图NTT钱包地址https://nasticker.com/#
 
-在钱包中存储至少1个NTT和一个NAS之后，可以挖矿。
-
+在钱包中存储至少25个NTT和0.01NAS之后，可以挖矿。
 
 ### 2. 克隆项目
 
@@ -40,13 +37,10 @@ npm i
  然后在文件夹中新建accounts.json文件，
  里面写入
 
- ["n1¥¥¥¥¥¥¥¥¥¥¥¥","n1RDoFyVbYNywBQPjiFb36zHZ6rh5yPHVuo","n1VyQXE9VpyR7v3fK77z5b5qkfq2GqLo7A4","n1anHGgCGewu9HUsoSymk1fQhFZ6RUhVUJq","n1Toe34Kj657zdAdRGACyp5ffExjzaAokqR"]
+ ["n1¥¥¥¥¥¥¥¥¥¥¥¥","将password改为自己钱包的密码，保存main"]
 
  里面的第一个元素 n1¥¥¥¥¥¥¥¥¥¥¥¥ 为自己的NAS地址（ n1……）
-
- 修改main.js
- 第23行的 var passphrase = "password";
- 将password改为自己钱包的密码，保存main.js文件。
+第二个元素为 密码 
 
  cd进入项目文件夹，最后在终端运行
   ```
@@ -81,6 +75,24 @@ npm i
  
  第23行的密码没改过来，或者密码记错了
 
+## 挖矿 docker 版本
+
+#### 方法1 直接使用打包好的docker image
+
+可以部署到任何支持docker的服务器。
+
+``` 
+docker pull yuxizhe/nastickertoolkit
+``` 
+
+运行时设置环境变量  
+
+> KEY : 账号json信息
+
+> PASSWORD : 账号密码
 
 
-****
+#### 方法2 自己打包使用
+
+修改 Dockerfile 中的变量
+KEY 和 PASSWORD 。 格式见文件中的例子
