@@ -32,6 +32,9 @@ var path = "./accounts/";
          passphrase = accounts[1];
          resolve();
      } catch (e){
+         if (typeof process.env.KEY !== 'undefined' && typeof process.env.PASSWORD !== 'undefined'){
+             resolve();
+         }
          try {
              mkdirsSync(path);
              generateWallets(1, passphrase, resolve);
