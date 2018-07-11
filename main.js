@@ -34,13 +34,9 @@ var path = "./accounts/";
          key = process.env.KEY;
          passphrase = process.env.PASSWORD;
      } else {
-         try {
-             var accounts = require(path + "accounts.json");
-             key = JSON.stringify(require(path + accounts[0] + ".json"));
-             passphrase = accounts[1]
-         } catch (error) {
-
-         }
+         var accounts = require(path + "accounts.json");
+         key = JSON.stringify(require(path + accounts[0] + ".json"));
+         passphrase = accounts[1]
      }
 
      var acc = new Account();
@@ -48,7 +44,7 @@ var path = "./accounts/";
      acc = acc.fromKey(key, passphrase, true);
 
     // Step 2: Send NAS and NTT to generated wallets
-     console.log('Send 0.01 NAS and some NTT to generated wallet: ' + acc.getAddressString());
+     console.log('Send 0.01 NAS and some NTT to the generated wallet: ' + acc.getAddressString());
 
      // Step 3: Start Mining
      setInterval(CGTPriceDaemon, 60000);
@@ -224,7 +220,7 @@ function generateWallets(amount, passphrase, callback){
     } catch (err){
         console.log("No exist accounts detected");
     }
-    var length = accounts.length;
+    var length = accounts.length / 2;
     if(amount > length){
         for(var i = 0; i < amount - length; i++){
             var acc = Account.NewAccount();
