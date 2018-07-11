@@ -36,7 +36,7 @@ npm i
   ```
   mkdir accounts
    ```
- 将注册钱包时的keystore文件 钱包名.jason文件（n1…….json）放入accounts 文件夹。
+ 将注册钱包时的keystore文件 钱包名.json文件（n1…….json）放入accounts 文件夹。
  然后在文件夹中新建accounts.json文件，
  里面写入
 
