@@ -29,10 +29,6 @@ git clone https://github.com/dabdevelop/NASTickerToolKit
 ```
 npm i
  ```
-安装的依赖为nebulas和bluebird
- ```
- npm install nebulas bluebird
- ```
 
  在<font color=#FF0000 >项目文件夹</font>里新建accounts文件夹
   ```
@@ -42,10 +38,11 @@ npm i
  然后在项目文件夹中新建accounts.json文件，
  里面写入
 
- ["n1*****************", "\<password\>"]
+ ["n1*****************", "password"]
 
 将里面的第一个元素 n1***************** 改成NAS地址
-第二个元素为 密码 将\<password\>改为自己钱包的密码并保存
+
+第二个元素为 密码, 将password改为自己钱包的密码并保存
 
  cd进入项目文件夹，最后在终端运行
   ```
@@ -93,9 +90,9 @@ npm i
 
   往产生的地址里面充入0.01 NAS 作为 Gas 和一些NTT作为虚拟算力
 
-## 挖矿 docker 版本
+# 挖矿 docker 版本
 
-#### 方法1 直接使用打包好的docker image
+## 方法1 直接使用打包好的docker image
 
 可以部署到任何支持docker的服务器。
 
@@ -103,14 +100,23 @@ npm i
 docker pull yuxizhe/nastickertoolkit
 ``` 
 
-运行时设置环境变量  
+在部署配置中设置环境变量  
 
 > KEY : 账号json信息
 
 > PASSWORD : 账号密码
 
 
-#### 方法2 自己打包使用
+或者用命令行启动，在命令行设置环境变量
+
+docker run -e 'KEY=账号json信息' -e 'PASSWORD=账号密码' yuxizhe/nastickertoolkit
+
+例子如下
+```
+docker run  -e 'KEY={"version":4,"id":"3a0c3dda-1475-481d-bdcb-49cc366eec61","address":"n1Si9Br3BUZX6QxdJ7WbcZSPjuacL9UhRZJ","crypto":{"ciphertext":"c85bcc9e838e1da6e75cfb69f4a6fb7bf2df64621ff822704f4aa185c659a847","cipherparams":{"iv":"3f30282ce8508777f25c07dcc5e30c3d"},"cipher":"aes-128-ctr","kdf":"scrypt","kdfparams":{"dklen":32,"salt":"64a52016ead8e5422ab4591ab28e8ee902caa8c0b3725edd91603e2bda671831","n":4096,"r":8,"p":1},"mac":"180f9754a65f2bd3ff7f450a100637e9715ab32e65d7ed9fcb5f7e71070f5962","machash":"sha3256"}}' -e 'PASSWORD=abcd12345' yuxizhe/nastickertoolkit
+```
+
+## 方法2 自己打包使用
 
 修改 Dockerfile 中的变量
 KEY 和 PASSWORD 。 格式见文件中的例子
