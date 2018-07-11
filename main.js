@@ -1,5 +1,8 @@
 "use strict";
-var fs = require('fs')
+var Promise = require("bluebird");
+
+var fs = require('fs');
+var _path = require("path");
 // Step 0: Configure Network and Path
 var Nebulas = require("nebulas"),
     Account = Nebulas.Account,
@@ -16,28 +19,41 @@ var dappAddress = 'n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr';
 
 neb.setRequest(new Nebulas.HttpRequest(rpcURL));
 
-var key 
-var passphrase 
+var key;
+var passphrase = "password";
 
 var path = "./accounts/";
 
-try {
-  var accounts = require(path + "accounts.json");
-  key = JSON.stringify(require(path + accounts[0] + ".json"));
-  passphrase = accounts[1]
-} catch (error) {
-  key = process.env.KEY;
-  passphrase = process.env.PASSWORD;
-}
+ new Promise(function(resolve, reject) {
+     // Step 1: Prepare account
+     mkdirsSync('accounts');
+     generateWallets(1, passphrase, resolve);
+ }).then(() => {
+    // Step 1: Prepare account
+     if(typeof process.env.KEY !== 'undefined' && typeof process.env.PASSWORD !== 'undefined'){
+         key = process.env.KEY;
+         passphrase = process.env.PASSWORD;
+     } else {
+         try {
+             var accounts = require(path + "accounts.json");
+             key = JSON.stringify(require(path + accounts[0] + ".json"));
+             passphrase = accounts[1]
+         } catch (error) {
 
-console.log(key);
-console.log(passphrase);
+         }
+     }
 
-var acc = new Account();
+     var acc = new Account();
 
-acc = acc.fromKey(key, passphrase, true);
+     acc = acc.fromKey(key, passphrase, true);
 
-setInterval(CGTPriceDaemon, 60000);
+    // Step 2: Send NAS and NTT to generated wallets
+     console.log('Send 0.01 NAS and some NTT to generated wallet: ' + acc.getAddressString());
+
+     // Step 3: Start Mining
+     setInterval(CGTPriceDaemon, 60000);
+ });
+
 
 function CGTPriceDaemon(){
     if(chainId > 0){
@@ -70,7 +86,7 @@ function callContract(contractAddress, fun, args, value, acc){
 
         let address = acc.getAddressString();
         neb.api.getAccountState(address).then((accstate) => {
-            if(Unit.fromBasic(accstate.balance, "nas").toNumber() > value){
+            if(Unit.fromBasic(accstate.balance, "nas").toNumber() > (value + 0.000001)){
                 let _value = Unit.toBasic(value);
                 if(nonce < 0){
                     nonce = parseInt(accstate.nonce);
@@ -122,7 +138,7 @@ function callContract(contractAddress, fun, args, value, acc){
                 });
 
             } else {
-                console.log("Escape " + address + " balance less than "+ value +" NAS.");
+                console.log("Escape " + address + " balance less than "+ (value + 0.000001) +" NAS.");
             }
         });
 
@@ -197,4 +213,51 @@ function getOldCGTPrice(callback){
         });
 
     }, dappAddress);
+}
+
+
+
+function generateWallets(amount, passphrase, callback){
+    var accounts = [];
+    try {
+        accounts = require(path + "accounts.json")
+    } catch (err){
+        console.log("No exist accounts detected");
+    }
+    var length = accounts.length;
+    if(amount > length){
+        for(var i = 0; i < amount - length; i++){
+            var acc = Account.NewAccount();
+            var address = acc.getAddressString();
+            var privateKeyString = acc.getPrivateKeyString();
+            //console.log('Account: ' + address + ' ; Private: ' + privateKeyString);
+            var key = acc.toKey(passphrase);
+
+            fs.writeFileSync(path + address + ".json", JSON.stringify(key), function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+            });
+            accounts.push(address);
+            accounts.push(passphrase);
+            console.log("The key " + address + ".json" + " was saved!");
+        }
+        fs.writeFileSync(path + "accounts.json", JSON.stringify(accounts), function(err) {
+            if(err) {
+                return console.log(err);
+            }
+        });
+    }
+    callback();
+}
+
+function mkdirsSync(dirname) {
+    if (fs.existsSync(dirname)) {
+        return true;
+    } else {
+        if (mkdirsSync(_path.dirname(dirname))) {
+            fs.mkdirSync(dirname);
+            return true;
+        }
+    }
 }

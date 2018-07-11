@@ -1,5 +1,6 @@
-## 主要内容 NTT挖矿教程
+# 主要内容 NTT挖矿教程
 
+## 手动配置步骤
 
 ### 1. 获取钱包前期准备
 
@@ -9,7 +10,7 @@ https://github.com/nebulasio/WebExtensionWallet
 NTT地址和NAS地址一样
 星图NTT钱包地址https://nasticker.com/#
 
-在钱包中存储至少25个NTT和0.01NAS之后，可以挖矿。
+在钱包中存储至少20个NTT和0.01NAS之后，可以挖矿。
 
 ### 2. 克隆项目
 
@@ -21,9 +22,9 @@ NTT地址和NAS地址一样
 ```
 npm i
  ```
-安装依赖nebulas
+安装依赖nebulas 和 bluebird
  ```
- npm install nebulas
+ npm install nebulas bluebird
  ```
 
  克隆项目 https://github.com/dabdevelop/NASTickerToolKit
@@ -75,6 +76,15 @@ npm i
  
  第23行的密码没改过来，或者密码记错了
 
+## 脚本自动配置步骤
+
+ cd进入项目文件夹，最后在终端运行
+   ```
+  npm start
+  ```
+
+  往产生的地址里面充入0.01 NAS 作为 Gas 和一些NTT作为虚拟算力
+
 ## 挖矿 docker 版本
 
 #### 方法1 直接使用打包好的docker image
@@ -90,6 +100,13 @@ docker pull yuxizhe/nastickertoolkit
 > KEY : 账号json信息
 
 > PASSWORD : 账号密码
+
+
+
+#### 方法2 自己打包使用
+
+修改 Dockerfile 中的变量
+KEY 和 PASSWORD 。 格式见文件中的例子
 
 
 #### 方法2 自己打包使用
