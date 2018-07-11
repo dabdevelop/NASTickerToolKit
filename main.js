@@ -26,7 +26,7 @@ var path = "./accounts/";
 
  new Promise(function(resolve, reject) {
      // Step 1: Prepare account
-     mkdirsSync('accounts');
+     mkdirsSync(path);
      generateWallets(1, passphrase, resolve);
  }).then(() => {
     // Step 1: Prepare account
