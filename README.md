@@ -100,7 +100,7 @@ npm i
 可以部署到任何支持docker的服务器。
 
 ``` 
-docker pull dabdevelop/nastickertoolkit
+docker pull yuxizhe/nastickertoolkit
 ``` 
 
 运行时设置环境变量  
