@@ -14,33 +14,32 @@ NTT地址和NAS地址一样
 
 ### 2. 克隆项目
 
-首先安装node
+
+首先安装node和npm
 ```
  brew install node
  ```
-然后安装npm
+克隆项目 https://github.com/dabdevelop/NASTickerToolKit项目克隆到本地后
+进入项目文件夹使用npm安装依赖
 ```
 npm i
  ```
-安装依赖nebulas 和 bluebird
+安装的依赖为nebulas和bluebird
  ```
  npm install nebulas bluebird
  ```
-
- 克隆项目 https://github.com/dabdevelop/NASTickerToolKit
- 项目克隆到本地后
 
  在<font color=#FF0000 >项目文件夹</font>里新建accounts文件夹
   ```
   mkdir accounts
    ```
  将注册钱包时的keystore文件 钱包名.json文件（n1…….json）放入accounts 文件夹。
- 然后在文件夹中新建accounts.json文件，
+ 然后在项目文件夹中新建accounts.json文件，
  里面写入
 
- ["n1¥¥¥¥¥¥¥¥¥¥¥¥","将password改为自己钱包的密码，保存main"]
+ ["n1*****************","<将password改为自己钱包的密码，保存main>"]
 
- 里面的第一个元素 n1¥¥¥¥¥¥¥¥¥¥¥¥ 为自己的NAS地址（ n1……）
+ 里面的第一个元素 n1***************** 为自己的NAS地址
 第二个元素为 密码 
 
  cd进入项目文件夹，最后在终端运行
@@ -62,7 +61,7 @@ npm i
  
  文件没存储好
 
- 2，Error: Cannot find module './accounts/n1…….json'
+ 2，Error: Cannot find module './accounts/n1*****************.json'
  钱包.json 
  
  文件没存储好
@@ -74,11 +73,11 @@ npm i
  4，Error: Key derivation failed - possibly wrong passphrase
  main.js 
  
- 第23行的密码没改过来，或者密码记错了
+ 密码没改过来，或者密码错了
 
 ## 脚本自动配置步骤
 
- cd进入项目文件夹，最后在终端运行
+ 安装依赖之后进入项目文件夹，最后在终端运行
    ```
   npm start
   ```
@@ -100,13 +99,6 @@ docker pull yuxizhe/nastickertoolkit
 > KEY : 账号json信息
 
 > PASSWORD : 账号密码
-
-
-
-#### 方法2 自己打包使用
-
-修改 Dockerfile 中的变量
-KEY 和 PASSWORD 。 格式见文件中的例子
 
 
 #### 方法2 自己打包使用
