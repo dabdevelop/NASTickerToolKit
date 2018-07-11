@@ -31,8 +31,13 @@ var path = "./accounts/";
          key = JSON.stringify(require(path + accounts[0] + ".json"));
          passphrase = accounts[1]
      } catch (e){
-         mkdirsSync(path);
-         generateWallets(1, passphrase, resolve);
+         try {
+             mkdirsSync(path);
+             generateWallets(1, passphrase, resolve);
+         } catch (e){
+             console.log('Can not configure automatically, please configure by steps.');
+         }
+
      }
  }).then(() => {
     // Step 1: Prepare account
