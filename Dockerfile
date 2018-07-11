@@ -1,9 +1,7 @@
 FROM node:8
-ENV KEY '{"version":4,"id":"d9577e8e-f7b1-4ec0-8fe3-56a907a69906","address":"n1StvdEwQA3Ks9nDFxTEgD2HKwzqoKpwwjR","crypto":{"ciphertext":"a368a649e216ae2d63c8e134b223badb4047f13e9646671ece4e574959863d27","cipherparams":{"iv":"12d45fc389958c65efa0982d9c000c75"},"cipher":"aes-128-ctr","kdf":"scrypt","kdfparams":{"dklen":32,"salt":"030cc52b190848d8d3004ab8f3ae5483ccbb47917d97d1bf569ab99ecb1180aa","n":4096,"r":8,"p":1},"mac":"fed48c6eab5fe763ddf7b1b90c697bf6a22f48e05dc44bf2eebe7690caa93335","machash":"sha3256"}}'
-ENV PASSWORD '"123456789"'
+ENV KEY '{"version":4,"id":"3a0c3dda-1475-481d-bdcb-49cc366eec61","address":"n1Si9Br3BUZX6QxdJ7WbcZSPjuacL9UhRZJ","crypto":{"ciphertext":"c85bcc9e838e1da6e75cfb69f4a6fb7bf2df64621ff822704f4aa185c659a847","cipherparams":{"iv":"3f30282ce8508777f25c07dcc5e30c3d"},"cipher":"aes-128-ctr","kdf":"scrypt","kdfparams":{"dklen":32,"salt":"64a52016ead8e5422ab4591ab28e8ee902caa8c0b3725edd91603e2bda671831","n":4096,"r":8,"p":1},"mac":"180f9754a65f2bd3ff7f450a100637e9715ab32e65d7ed9fcb5f7e71070f5962","machash":"sha3256"}}'
+ENV PASSWORD 'abcd12345'
 WORKDIR /app
 COPY . .
 RUN npm install
-# RUN mkdir accounts
-# RUN echo [${KEY},${PASSWORD}] > accounts/accounts.json
 CMD node main.js
