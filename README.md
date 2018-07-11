@@ -19,7 +19,12 @@ NTT地址和NAS地址一样
 ```
  brew install node
  ```
-克隆项目 https://github.com/dabdevelop/NASTickerToolKit项目克隆到本地后
+克隆项目到本地
+
+```
+git clone https://github.com/dabdevelop/NASTickerToolKit
+ ```
+
 进入项目文件夹使用npm安装依赖
 ```
 npm i
@@ -56,26 +61,30 @@ npm i
 ****
  有可能的问题：
 
- 1.Error: Cannot find module './accounts/accounts.json'
+ 1. Error: Cannot find module './accounts/accounts.json'
  accounts.json 
  
  文件没存储好
 
- 2，Error: Cannot find module './accounts/n1*****************.json'
+ 2. Error: Cannot find module './accounts/n1*****************.json'
  钱包.json 
  
  文件没存储好
 
- 3，Error: Cannot find module 'nebulas'
+ 3. Error: Cannot find module 'nebulas'
  
- 安装 npm install nebulas
+ 安装nebulas: npm install nebulas
 
- 4，Error: Key derivation failed - possibly wrong passphrase
+ 4. Error: Cannot find module 'bluebird'
+
+ 安装bluebird: npm install bluebird
+
+ 5. Error: Key derivation failed - possibly wrong passphrase
  main.js 
  
  密码没改过来，或者密码错了
 
-## 脚本自动配置步骤
+## 自动配置步骤
 
  安装依赖之后进入项目文件夹，最后在终端运行
    ```
@@ -91,7 +100,7 @@ npm i
 可以部署到任何支持docker的服务器。
 
 ``` 
-docker pull yuxizhe/nastickertoolkit
+docker pull dabdevelop/nastickertoolkit
 ``` 
 
 运行时设置环境变量  
