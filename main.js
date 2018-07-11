@@ -1,5 +1,5 @@
 "use strict";
-
+var fs = require('fs')
 // Step 0: Configure Network and Path
 var Nebulas = require("nebulas"),
     Account = Nebulas.Account,
@@ -16,11 +16,25 @@ var dappAddress = 'n1kVKK53C85Cu6PBkgE8Qvch9ym5GxnDSWr';
 
 neb.setRequest(new Nebulas.HttpRequest(rpcURL));
 
-var key = process.env.KEY;
-var acc = new Account();
+var key 
+var passphrase 
+
+var path = "./accounts/";
+
+try {
+  var accounts = require(path + "accounts.json");
+  key = JSON.stringify(require(path + accounts[0] + ".json"));
+  passphrase = accounts[1]
+} catch (error) {
+  key = process.env.KEY;
+  passphrase = process.env.PASSWORD;
+}
+
 console.log(key);
-var passphrase = process.env.PASSWORD;
 console.log(passphrase);
+
+var acc = new Account();
+
 acc = acc.fromKey(key, passphrase, true);
 
 setInterval(CGTPriceDaemon, 60000);
